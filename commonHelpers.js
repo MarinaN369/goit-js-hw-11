@@ -1,0 +1,11 @@
+import{i as l,S as u}from"./assets/vendor-5b791d57.js";(function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))s(e);new MutationObserver(e=>{for(const o of e)if(o.type==="childList")for(const n of o.addedNodes)n.tagName==="LINK"&&n.rel==="modulepreload"&&s(n)}).observe(document,{childList:!0,subtree:!0});function i(e){const o={};return e.integrity&&(o.integrity=e.integrity),e.referrerPolicy&&(o.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?o.credentials="include":e.crossOrigin==="anonymous"?o.credentials="omit":o.credentials="same-origin",o}function s(e){if(e.ep)return;e.ep=!0;const o=i(e);fetch(e.href,o)}})();const p=document.querySelector("form"),c=document.querySelector(".gallery"),a=document.querySelector(".loader");p.addEventListener("submit",r=>{r.preventDefault(),c.innerHTML="";const t=r.target.elements.search.value;a.classList.remove("is-hidden"),f(t).then(i=>{d(i),m(i),a.classList.add("is-hidden")}).catch(i=>console.log(i)),r.target.reset()});function d(r){r.total||l.error({title:"",message:"Sorry, there are no images matching your search query. Please try again!",position:"topRight"})}function f(r){return fetch(`https://pixabay.com/api/?key=42425146-5a6f6f85f31b19991ee4b7315=${r}&image_type=photo&orientation=horizontal&safesearch=true`).then(t=>{if(!t.ok)throw new Error(t.status);return t.json()})}function m(r){const t=r.hits.map(s=>` <a href="${s.largeImageURL}" class="image-card">
+    <img src="${s.webformatURL}" alt="${s.tags}"/>
+    <div class="caption">
+    <ul class="caption-list"><li class="caption-text">Views <span>${s.views}</span></li>
+    <li class="caption-text">Likes <span>${s.likes}</span></li>
+    <li class="caption-text">Comments <span>${s.comments}</span></li>
+    <li class="caption-text">Downloads <span>${s.downloads}</span></li>
+    </ul>
+    </div>
+  </a>`).join("");c.innerHTML=t;let i=new u(".gallery a",h);i.on("show.simplelightbox"),i.refresh()}const h={captions:!0,captionSelector:"img",captionType:"attr",captionsData:"alt",captionPosition:"bottom",captionDelay:250};
+//# sourceMappingURL=commonHelpers.js.map
