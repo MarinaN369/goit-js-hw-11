@@ -6,17 +6,17 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const form = document.querySelector('form');
 
-const imagesList = document.querySelector(".gallery")
+const galleryList = document.querySelector(".gallery")
 const loader = document.querySelector(".loader")
 
 form.addEventListener('submit', (event) => {
     event.preventDefault();
-    imagesList.innerHTML = '';
+    galleryList.innerHTML = '';
     const keyWord = event.target.elements.search.value;
     loader.classList.remove('is-hidden')
     fetchImages(keyWord)
         .then((images) => {
-            validation(images);
+           test(images);
             renderImages(images);
             
             loader.classList.add('is-hidden');
@@ -26,7 +26,7 @@ form.addEventListener('submit', (event) => {
     event.target.reset();
 })
 
-function validation(images) {
+function test(images) {
     if (!images.total) {
         iziToast.error({
     title: '',
@@ -37,10 +37,10 @@ function validation(images) {
 }
 
 function fetchImages(keyWord) {
-    return fetch(`https://pixabay.com/api/?key=42425146-5a6f6f85f31b19991ee4b7315=${keyWord}&image_type=photo&orientation=horizontal&safesearch=true`).then((response) => {
+    return fetch(`https://pixabay.com/api/?key=42425146-5a6f6f85f31b19991ee4b7315&q=${keyWord}&image_type=photo&orientation=horizontal&safesearch=true`).then((response) => {
  
         if (!response.ok) {
-            throw new Error(response.status);
+            throw new Error(response.statusText);
         }
         return response.json();
     });
@@ -61,13 +61,11 @@ function renderImages(images){
   </a>`;
         })
         .join("");
-    imagesList.innerHTML = markup;
+    galleryList.innerHTML = markup;
     let gallery = new SimpleLightbox('.gallery a', options);
     gallery.on('show.simplelightbox');
     gallery.refresh();
 }
-
-
 
 
 const options = {
